@@ -3,7 +3,12 @@ package com.poshist.maBit.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.poshist.maBit.entity.MbSubUser;
+import com.poshist.maBit.entity.MbUserInfo;
+import com.poshist.maBit.repository.MbSubUserDao;
+import com.poshist.maBit.repository.MbuserInfoDao;
 import com.poshist.maBit.utils.HttpUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,14 +23,20 @@ import java.util.Map;
 @Transactional
 public class BtcTop {
     private static String baseUrl="http://www.btc.top";
+    private static Long siteId=1l;
+@Autowired
+private MbSubUserDao mbSubUserDao;
+@Autowired
+private MbuserInfoDao mbUserInfoDao;
+
+    public void getData() throws IOException {
 
 
-    public void Login(){
 
+        HttpUtils.post(baseUrl+"/api/user/sign_in","username=huobitebdc&password=jieyue201801",baseUrl);
+           String userInfo= HttpUtils.post(baseUrl+"/api/user/get_dashboard",null,baseUrl);
+        saveData(userInfo,"huobitebdc");
 
-        try {
-            HttpUtils.post(baseUrl+"/api/user/sign_in","username=huobitebdc&password=jieyue201801",baseUrl);
-            String userInfo= HttpUtils.post(baseUrl+"/api/user/get_dashboard",null,baseUrl);
            String userJson= HttpUtils.post(baseUrl+"/api/user/get_info",null,baseUrl);
            Map usrMap = JSON.parseObject(userJson);
            if(null!= ((Map)usrMap.get("data")).get("sub_users")){
@@ -34,18 +45,31 @@ public class BtcTop {
                    String subUserName=(String)((Map)subUserList.get(i)).get("username");
                    HttpUtils.post(baseUrl+"/api/www/change_to_user","username="+subUserName,baseUrl);
                    userInfo= HttpUtils.post(baseUrl+"/api/user/get_dashboard",null,baseUrl);
+                   saveData(userInfo,subUserName);
                }
 
            }
+    }
+    public void saveData(String json,String userName){
+        Map um=(Map)JSON.parseObject(json).get("data");
+        if(Double.parseDouble(((Map)um.get("speed_in_24h")).get("valid_speed").toString())>0){
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        MbSubUser su=mbSubUserDao.findMbSubUserByNameAndSiteId(userName,siteId);
+        if(null==su){
+            su=new MbSubUser();
+            su.setName(userName);
+            su.setSiteId(siteId);
+            mbSubUserDao.save(su);
+        }
+
+        MbUserInfo ui=new MbUserInfo();
+        ui.setUserId(su.getId());
+        ui.setPrv(Double.parseDouble(((Map)um.get("speed_in_24h")).get("valid_speed").toString()));
+        ui.setBtc(Double.parseDouble(um.get("today_paid").toString()));
+        ui.setBch(Double.parseDouble(um.get("today_bch_paid").toString()));
+        mbUserInfoDao.save(ui);
         }
 
 
-    }
-    public static void main (String[] args){
-        BtcTop bt=new BtcTop();
-        bt.Login();
     }
 }

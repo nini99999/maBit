@@ -49,8 +49,7 @@ public class HttpUtils {
                 .setDefaultCookieStore(cookieStore).build();
 
     }
-    public static String post(String url, String parameters,String referer)
-            throws  IOException {
+    public static String post(String url, String parameters,String referer) throws IOException {
         HttpPost httpPost = new HttpPost(url);
 
         if(null!=referer) {
@@ -63,24 +62,11 @@ public class HttpUtils {
             httpPost.setEntity(entity);
         }
         ResponseHandler<String> responseHandler = new BasicResponseHandler();
-        String responseJson = null;
-        //HttpClientContext context = HttpClientContext.create();
-        try {
-           // httpClient.execute(httpPost,context);
-            responseJson  = httpClient.execute(httpPost,responseHandler);
+        String responseJson = httpClient.execute(httpPost,responseHandler);
         logger.info("HttpClient POST请求结果：" + responseJson);
-    }
-    catch (ClientProtocolException e) {
-        e.printStackTrace();
-        logger.info("HttpClient POST请求异常：" + e.getMessage());
-    }
-    catch (IOException e) {
-        e.printStackTrace();
-    }
-    finally {
         httpClient.getConnectionManager().closeExpiredConnections();
         httpClient.getConnectionManager().closeIdleConnections(30, TimeUnit.SECONDS);
-    }
+
     return responseJson;
 
     }

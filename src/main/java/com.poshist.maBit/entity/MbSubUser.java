@@ -14,19 +14,10 @@ import javax.persistence.Table;
 @Table(name = "MB_SUB_USER")
 @EntityListeners(AuditingEntityListener.class)
 public class MbSubUser extends AbstractPersistable<Long> implements Cloneable {
-    private Long id;
     private Long siteId;
     private String name;
 
-    @Override
-    public Long getId() {
-        return id;
-    }
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getSiteId() {
         return siteId;

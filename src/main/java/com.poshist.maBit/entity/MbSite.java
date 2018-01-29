@@ -14,17 +14,11 @@ import javax.persistence.Table;
 @Table(name = "MB_SITE")
 @EntityListeners(AuditingEntityListener.class)
 public class MbSite  extends AbstractPersistable<Long> implements Cloneable {
-    private Long id;
+
+
     private String name;
     private String lastTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

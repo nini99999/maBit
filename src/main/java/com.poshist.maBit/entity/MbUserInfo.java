@@ -15,22 +15,12 @@ import java.util.Date;
 @Table(name = "MB_USER_INFO")
 @EntityListeners(AuditingEntityListener.class)
 public class MbUserInfo extends AbstractPersistable<Long> implements Cloneable {
-    private Long id;
+
     private Long userId;
     private Double prv;
     private Double bch;
     private Double btc;
     private Date recTime;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;

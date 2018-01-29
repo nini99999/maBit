@@ -1,6 +1,7 @@
 package com.poshist.maBit;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
@@ -8,6 +9,7 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 /**
  * Created by poshist on 18-1-26.
  */
+@EnableAutoConfiguration
 @SpringBootApplication
 public class MaBitApplication  extends SpringBootServletInitializer {
     @Override
