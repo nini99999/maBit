@@ -2,12 +2,12 @@ package com.poshist.maBit.utils;
 
 import org.apache.http.Consts;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
@@ -68,6 +68,22 @@ public class HttpUtils {
         httpClient.getConnectionManager().closeIdleConnections(30, TimeUnit.SECONDS);
 
     return responseJson;
+
+    }
+    public static String get(String url, String parameters,String referer) throws IOException {
+        HttpGet httpGet = new HttpGet(url+"?"+parameters);
+
+        if(null!=referer) {
+            httpGet.setHeader("referer", referer);
+        }
+
+        ResponseHandler<String> responseHandler = new BasicResponseHandler();
+        String responseJson = httpClient.execute(httpGet,responseHandler);
+        logger.info("HttpClient POST请求结果：" + responseJson);
+        httpClient.getConnectionManager().closeExpiredConnections();
+        httpClient.getConnectionManager().closeIdleConnections(30, TimeUnit.SECONDS);
+
+        return responseJson;
 
     }
 

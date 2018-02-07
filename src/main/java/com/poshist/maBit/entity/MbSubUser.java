@@ -16,8 +16,25 @@ import javax.persistence.Table;
 public class MbSubUser extends AbstractPersistable<Long> implements Cloneable {
     private Long siteId;
     private String name;
+    private String btcDesc;
+    private String bchDesc;
 
 
+    public String getBtcDesc() {
+        return btcDesc;
+    }
+
+    public void setBtcDesc(String btcDesc) {
+        this.btcDesc = btcDesc;
+    }
+
+    public String getBchDesc() {
+        return bchDesc;
+    }
+
+    public void setBchDesc(String bchDesc) {
+        this.bchDesc = bchDesc;
+    }
 
     public Long getSiteId() {
         return siteId;

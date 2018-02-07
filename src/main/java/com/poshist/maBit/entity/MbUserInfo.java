@@ -3,9 +3,7 @@ package com.poshist.maBit.entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -15,19 +13,20 @@ import java.util.Date;
 @Table(name = "MB_USER_INFO")
 @EntityListeners(AuditingEntityListener.class)
 public class MbUserInfo extends AbstractPersistable<Long> implements Cloneable {
-
-    private Long userId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    private MbSubUser mbSubUser;
     private Double prv;
     private Double bch;
     private Double btc;
     private Date recTime;
 
-    public Long getUserId() {
-        return userId;
+    public MbSubUser getMbSubUser() {
+        return mbSubUser;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setMbSubUser(MbSubUser mbSubUser) {
+        this.mbSubUser = mbSubUser;
     }
 
     public Double getPrv() {

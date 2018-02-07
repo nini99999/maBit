@@ -8,11 +8,14 @@ import com.poshist.maBit.entity.MbUserInfo;
 import com.poshist.maBit.repository.MbSubUserDao;
 import com.poshist.maBit.repository.MbuserInfoDao;
 import com.poshist.maBit.utils.HttpUtils;
+import com.poshist.maBit.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +31,13 @@ public class BtcTop {
 private MbSubUserDao mbSubUserDao;
 @Autowired
 private MbuserInfoDao mbUserInfoDao;
+
+public List<MbUserInfo> getData(String date){
+List<MbUserInfo> list=mbUserInfoDao.findByRecTimeBetweenAndMbSubUser_SiteIdOrderByMbSubUserId(TimeUtils.stringToDate(date+" 00:00:00"),TimeUtils.stringToDate(date+" 23:59:59"),1l);
+return list;
+
+}
+
 
     public void getData() throws IOException {
 
@@ -52,7 +62,7 @@ private MbuserInfoDao mbUserInfoDao;
     }
     public void saveData(String json,String userName){
         Map um=(Map)JSON.parseObject(json).get("data");
-        if(Double.parseDouble(((Map)um.get("speed_in_24h")).get("valid_speed").toString())>0){
+        if(Double.parseDouble(um.get("today_paid").toString())>0||Double.parseDouble(um.get("today_bch_paid").toString())>0){
 
         MbSubUser su=mbSubUserDao.findMbSubUserByNameAndSiteId(userName,siteId);
         if(null==su){
@@ -63,10 +73,11 @@ private MbuserInfoDao mbUserInfoDao;
         }
 
         MbUserInfo ui=new MbUserInfo();
-        ui.setUserId(su.getId());
+        ui.setMbSubUser(su);
         ui.setPrv(Double.parseDouble(((Map)um.get("speed_in_24h")).get("valid_speed").toString()));
         ui.setBtc(Double.parseDouble(um.get("today_paid").toString()));
         ui.setBch(Double.parseDouble(um.get("today_bch_paid").toString()));
+        ui.setRecTime(new Date());
         mbUserInfoDao.save(ui);
         }
 
