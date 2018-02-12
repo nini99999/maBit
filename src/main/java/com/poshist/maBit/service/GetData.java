@@ -27,8 +27,8 @@ private BtcTop btctop;
 @Autowired
 private BtcCom btcCom;
 
-    @Scheduled(cron = "00 00 09 * * ?")
-    @Scheduled(cron = "00 30 08 * * ?")
+    @Scheduled(cron = "00 00 10 * * ?")
+    @Scheduled(cron = "00 00 11 * * ?")
     @Scheduled(cron = "00 30 09 * * ?")
     @Scheduled(initialDelay = 1000,fixedDelay=86400000)
     public void getData(){
@@ -74,7 +74,7 @@ private BtcCom btcCom;
         for (MbUserInfo info : list) {
             String str="";
             if(info.getMbSubUser().getId()==999l){
-                str= "用户：BTCCOM汇总;昨日BTC收益:" + MatchUtils.doubleToStr(btc) + ";昨日BTH收益:" + MatchUtils.doubleToStr(bch) + ";24小时BTC算力:" + MatchUtils.doubleToStr((btcPrv / p))+ ";24小时BCH算力:" + MatchUtils.doubleToStr((bchPrv / p))
+                str= "用户：BTCCOM汇总;昨日BTC收益:" + MatchUtils.doubleToStr(btc) + ";昨日BCH收益:" + MatchUtils.doubleToStr(bch) + ";24小时BTC算力:" + MatchUtils.doubleToStr((btcPrv / p))+ ";24小时BCH算力:" + MatchUtils.doubleToStr((bchPrv / p))
                 +";昨日BTC返佣："+MatchUtils.doubleToStr(info.getBtc())+";昨日BCh返佣："+MatchUtils.doubleToStr(info.getBch())+";昨日BTC总收益："+MatchUtils.doubleToStr(info.getBtc()+btc)+";昨日BCH总收益："+MatchUtils.doubleToStr(info.getBch()+bch);
                 if(btcPrv>0){
                     str=str+  ";昨日BTC总收益/P:" + MatchUtils.doubleToStr((info.getBtc()+btc) / (btcPrv / p));
@@ -89,7 +89,7 @@ private BtcCom btcCom;
 
             }else {
          if(info.getPrv()!=0) {
-              str= "用户：" + info.getMbSubUser().getName() + ";昨日BTC收益:" + MatchUtils.doubleToStr(info.getBtc()) + ";昨日BTH收益:" + MatchUtils.doubleToStr(info.getBch()) + ";24小时算力:" + MatchUtils.doubleToStr((info.getPrv() / p))
+              str= "用户：" + info.getMbSubUser().getName() + ";昨日BTC收益:" + MatchUtils.doubleToStr(info.getBtc()) + ";昨日BCH收益:" + MatchUtils.doubleToStr(info.getBch()) + ";24小时算力:" + MatchUtils.doubleToStr((info.getPrv() / p))
                      + ";昨日BTC收益/P:" + MatchUtils.doubleToStr(info.getBtc() / (info.getPrv() / p)) + ";昨日BCH收益/P:" + MatchUtils.doubleToStr(info.getBch() / (info.getPrv() / p)) + ";";
          if(info.getBch()==0){
              btcPrv=btcPrv+info.getPrv();
