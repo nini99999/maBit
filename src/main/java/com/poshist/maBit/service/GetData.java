@@ -99,7 +99,7 @@ private BtcCom btcCom;
          btc=btc+info.getBtc();
          bch=bch+info.getBch();
          }else{
-             str= "用户：" + info.getMbSubUser().getName() + ";昨日BTC收益:" + MatchUtils.doubleToStr(info.getBtc()) + ";昨日BTH收益:" + MatchUtils.doubleToStr(info.getBch()) + ";24小时算力:0;昨日BTC收益/P:0;昨日BCH收益/P:0;";
+             str= "用户：" + info.getMbSubUser().getName() + ";昨日BTC收益:" + MatchUtils.doubleToStr(info.getBtc()) + ";昨日BCH收益:" + MatchUtils.doubleToStr(info.getBch()) + ";24小时算力:0;昨日BTC收益/P:0;昨日BCH收益/P:0;";
          }
             }
             sendDataBytelegrm( "parse_mode=Markdown&chat_id=-298395231&text=" + str);
