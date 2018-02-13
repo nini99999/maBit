@@ -48,6 +48,11 @@ public class BtcCom {
 info.setBtc(getfy("https://btc.com/1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU   ","1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU"));
 info.setBch(getfy("https://bch.btc.com/1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc","1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc"));
             }else{
+                if(sub.getName().equals("huobitewuhai")){
+                    baseUrl="https://cn-pool.api.btc.com/v1/account/earn-stats";
+                }else{
+                    baseUrl="https://sz-bccpool.btc.com/v1/account/earn-stats";
+                }
                 if (StringUtils.isNotEmpty(sub.getBtcDesc())) {
                     String infoJson = HttpUtils.get(baseUrl, sub.getBtcDesc(), null);
                     Map infoMap = (Map) JSON.parseObject(infoJson).get("data");

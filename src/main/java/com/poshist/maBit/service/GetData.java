@@ -29,7 +29,7 @@ private BtcCom btcCom;
 
     @Scheduled(cron = "00 00 10 * * ?")
     @Scheduled(cron = "00 00 11 * * ?")
-    @Scheduled(cron = "00 30 09 * * ?")
+    @Scheduled(cron = "00 30 10 * * ?")
     @Scheduled(initialDelay = 1000,fixedDelay=86400000)
     public void getData(){
         MbSite top=mbSiteDao.findMbSiteByName("btc.top");
@@ -110,7 +110,7 @@ private BtcCom btcCom;
     }
     public void sendDataBytelegrm(String text) throws IOException {
         String url = "https://api.telegram.org/bot493436737:AAFVEXH2ueliwkLXIa3LILKTmlEwyWYc7P0/sendMessage";
-        //HttpUtils.post(url, text, null);
-        System.out.println("tele------------------"+text);
+        HttpUtils.post(url, text, null);
+       // System.out.println("tele------------------"+text);
     }
 }
