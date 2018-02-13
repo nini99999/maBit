@@ -32,9 +32,9 @@ public class Test {
         }
     return 0d;
     }
-    public static void main(String[] agrs) throws IOException {
-        Test t=new Test();
-        t.getfy("https://bch.btc.com/1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc","1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc");
-        t.getfy("https://btc.com/1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU   ","1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU");
-    }
+//    public static void main(String[] agrs) throws IOException {
+//        Test t=new Test();
+//        t.getfy("https://bch.btc.com/1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc","1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc");
+//        t.getfy("https://btc.com/1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU   ","1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU");
+//    }
 }
