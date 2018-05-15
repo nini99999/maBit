@@ -31,12 +31,11 @@ public class BtcCom {
     private MbSubUserDao mbSubUserDao;
     @Autowired
     private MbuserInfoDao mbuserInfoDao;
-    private String baseUrl="https://sz-pool.api.btc.com/v1/account/earn-stats";
     public List<MbUserInfo> getData(String dataStr){
         return mbuserInfoDao.findByRecTimeBetweenAndMbSubUser_SiteIdOrderByMbSubUserId(TimeUtils.stringToDate(dataStr+" 00:00:00"),TimeUtils.stringToDate(dataStr+" 23:59:59"),2l);
     }
     public void getData() throws IOException {
-        List<MbSubUser> subList=mbSubUserDao.findBySiteId(2l);
+        List<MbSubUser> subList=mbSubUserDao.findBySiteIdAndStatus(2l,"01");
         for (MbSubUser sub:subList){
             MbUserInfo info = new MbUserInfo();
             info.setMbSubUser(sub);
@@ -48,13 +47,9 @@ public class BtcCom {
 info.setBtc(getfy("https://btc.com/1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU   ","1FmTzzYCCpvVjatTcJxa2tk9GiuWp3T3kU"));
 info.setBch(getfy("https://bch.btc.com/1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc","1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc"));
             }else{
-                if(sub.getName().equals("huobitewuhai")){
-                    baseUrl="https://cn-pool.api.btc.com/v1/account/earn-stats";
-                }else{
-                    baseUrl="https://sz-pool.api.btc.com/v1/account/earn-stats";
-                }
+
                 if (StringUtils.isNotEmpty(sub.getBtcDesc())) {
-                    String infoJson = HttpUtils.get(baseUrl, sub.getBtcDesc(), null);
+                    String infoJson = HttpUtils.get( sub.getBtcDesc(), null);
                     Map infoMap = (Map) JSON.parseObject(infoJson).get("data");
                     if (null != infoMap.get("earnings_yesterday")) {
                         info.setBtc(Double.parseDouble(infoMap.get("earnings_yesterday").toString()) / 100000000);
@@ -65,7 +60,7 @@ info.setBch(getfy("https://bch.btc.com/1NAfTShLy3DpV9fQFYkVvRT2u29SUZWizc","1NAf
                 }
 
                 if (StringUtils.isNotEmpty(sub.getBchDesc())) {
-                    String infoJson = HttpUtils.get(baseUrl, sub.getBchDesc(), null);
+                    String infoJson = HttpUtils.get(sub.getBchDesc(), null);
                     Map infoMap = (Map) JSON.parseObject(infoJson).get("data");
                     if (null != infoMap.get("earnings_yesterday")) {
                         info.setBch(Double.parseDouble(infoMap.get("earnings_yesterday").toString()) / 100000000);

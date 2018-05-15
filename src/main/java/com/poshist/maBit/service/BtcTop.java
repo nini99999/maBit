@@ -69,6 +69,7 @@ return list;
             su=new MbSubUser();
             su.setName(userName);
             su.setSiteId(siteId);
+            su.setStatus("01");
             mbSubUserDao.save(su);
         }
 

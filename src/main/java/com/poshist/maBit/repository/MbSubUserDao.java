@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface MbSubUserDao   extends CrudRepository<MbSubUser, Long> {
     MbSubUser findMbSubUserByNameAndSiteId(String name,Long ID);
-    List<MbSubUser> findBySiteId(Long id);
+    List<MbSubUser> findBySiteIdAndStatus(Long id,String status);
 }

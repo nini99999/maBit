@@ -110,7 +110,7 @@ private BtcCom btcCom;
     }
     public void sendDataBytelegrm(String text) throws IOException {
         String url = "https://api.telegram.org/bot493436737:AAFVEXH2ueliwkLXIa3LILKTmlEwyWYc7P0/sendMessage";
-        HttpUtils.post(url, text, null);
-       // System.out.println("tele------------------"+text);
+        //HttpUtils.post(url, text, null);
+        System.out.println("tele------------------"+text);
     }
 }

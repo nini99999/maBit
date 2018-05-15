@@ -70,8 +70,8 @@ public class HttpUtils {
     return responseJson;
 
     }
-    public static String get(String url, String parameters,String referer) throws IOException {
-        HttpGet httpGet = new HttpGet(url+"?"+parameters);
+    public static String get(String url,String  referer)throws IOException {
+        HttpGet httpGet = new HttpGet(url);
 
         if(null!=referer) {
             httpGet.setHeader("referer", referer);
@@ -84,6 +84,12 @@ public class HttpUtils {
         httpClient.getConnectionManager().closeIdleConnections(30, TimeUnit.SECONDS);
 
         return responseJson;
+
+    }
+    public static String get(String url, String parameters,String referer) throws IOException {
+
+        return get(url+"?"+parameters,referer);
+
 
     }
 
